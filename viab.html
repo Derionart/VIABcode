@@ -1,0 +1,1044 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VIAB — Сложные веб-решения и умные TG-боты</title>
+<meta name="description" content="VIAB — digital-агентство. Разрабатываем высоконагруженные веб-системы, корпоративные сайты и умные Telegram-боты для вашего бизнеса. УНП: BE8793005">
+<meta property="og:title" content="VIAB — Сложные веб-решения">
+<meta property="og:description" content="Сложные веб-решения и умные TG-боты для вашего бизнеса">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<!-- ⚠️ Конфигурация загружается из config.js (не коммитить в git!) -->
+<script src="config.js"></script>
+<style>
+:root {
+  --obsidian: #0A0A0A;
+  --obsidian-2: #111111;
+  --obsidian-3: #1A1A1A;
+  --obsidian-4: #222222;
+  --silver: #C0C0C0;
+  --silver-dim: #888888;
+  --silver-faint: #333333;
+  --indigo: #4F46E5;
+  --indigo-light: #6366f1;
+  --indigo-glow: rgba(79,70,229,0.18);
+  --indigo-glow-strong: rgba(79,70,229,0.35);
+  --glass-bg: rgba(255,255,255,0.03);
+  --glass-border: rgba(255,255,255,0.07);
+  --glass-border-hover: rgba(192,192,192,0.2);
+  --text-primary: #EFEFEF;
+  --text-secondary: #888;
+  --text-muted: #555;
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --font-display: 'Syne', sans-serif;
+  --font-mono: 'DM Mono', monospace;
+  --transition: 0.4s cubic-bezier(0.25,0.46,0.45,0.94);
+  --transition-fast: 0.2s cubic-bezier(0.25,0.46,0.45,0.94);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;font-size:16px}
+body{background-color:var(--obsidian);color:var(--text-primary);font-family:var(--font-display);overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");pointer-events:none;z-index:9999;opacity:.55}
+/* SCROLLBAR */
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:var(--obsidian)}::-webkit-scrollbar-thumb{background:var(--silver-faint);border-radius:2px}::-webkit-scrollbar-thumb:hover{background:var(--indigo)}
+/* UTILITY */
+.container{max-width:1280px;margin:0 auto;padding:0 32px}
+.tag{font-family:var(--font-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--indigo-light);border:1px solid var(--indigo-glow-strong);background:var(--indigo-glow);padding:5px 12px;border-radius:100px;display:inline-block}
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:18px 0;transition:var(--transition)}
+nav.scrolled{background:rgba(10,10,10,.88);backdrop-filter:blur(24px);border-bottom:1px solid var(--glass-border)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between}
+.logo{font-size:22px;font-weight:800;letter-spacing:-.02em;color:var(--text-primary);text-decoration:none;display:flex;align-items:center;gap:8px}
+.logo-dot{width:8px;height:8px;background:var(--indigo);border-radius:50%;display:inline-block;animation:pulse-dot 2s ease-in-out infinite}
+@keyframes pulse-dot{0%,100%{box-shadow:0 0 0 0 rgba(79,70,229,.7)}50%{box-shadow:0 0 0 6px rgba(79,70,229,0)}}
+.nav-links{display:flex;align-items:center;gap:36px;list-style:none}
+.nav-links a{font-family:var(--font-mono);font-size:13px;color:var(--text-secondary);text-decoration:none;letter-spacing:.04em;transition:color var(--transition-fast);position:relative}
+.nav-links a::after{content:'';position:absolute;bottom:-2px;left:0;right:0;height:1px;background:var(--indigo);transform:scaleX(0);transform-origin:left;transition:transform var(--transition-fast)}
+.nav-links a:hover{color:var(--text-primary)}.nav-links a:hover::after{transform:scaleX(1)}
+.nav-cta{background:var(--indigo);color:#fff;padding:10px 22px;border-radius:var(--radius-sm);font-size:13px;font-weight:600;text-decoration:none;transition:var(--transition-fast);border:none;font-family:var(--font-display)}
+.nav-cta:hover{background:var(--indigo-light);transform:translateY(-1px)}
+/* HERO */
+.hero{min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden;padding:120px 0 80px}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 70% 50%,rgba(79,70,229,.12) 0%,transparent 60%),radial-gradient(ellipse 40% 60% at 20% 80%,rgba(192,192,192,.04) 0%,transparent 50%)}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);background-size:60px 60px;mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black 0%,transparent 100%)}
+.hero-content{position:relative;z-index:2;max-width:900px}
+.hero-eyebrow{display:flex;align-items:center;gap:16px;margin-bottom:32px}
+.hero-eyebrow-line{width:40px;height:1px;background:var(--indigo)}
+.hero-eyebrow span{font-family:var(--font-mono);font-size:12px;letter-spacing:.16em;color:var(--indigo-light);text-transform:uppercase}
+h1.hero-title{font-size:clamp(52px,8vw,110px);font-weight:800;line-height:.92;letter-spacing:-.04em;margin-bottom:32px}
+.hero-title em{font-style:normal;color:transparent;-webkit-text-stroke:1px rgba(192,192,192,.4)}
+.hero-title .accent{color:var(--indigo-light)}
+.hero-sub{font-size:18px;color:var(--text-secondary);line-height:1.7;max-width:520px;margin-bottom:52px;font-weight:400}
+.hero-actions{display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+.btn-primary{display:inline-flex;align-items:center;gap:10px;background:var(--indigo);color:#fff;padding:16px 32px;border-radius:var(--radius-sm);font-size:15px;font-weight:600;text-decoration:none;border:none;transition:var(--transition-fast);position:relative;overflow:hidden;font-family:var(--font-display)}
+.btn-primary::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.15),transparent);opacity:0;transition:opacity var(--transition-fast)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 16px 40px rgba(79,70,229,.4)}.btn-primary:hover::before{opacity:1}
+.btn-ghost{display:inline-flex;align-items:center;gap:10px;background:transparent;color:var(--silver);padding:16px 32px;border-radius:var(--radius-sm);font-size:15px;font-weight:500;text-decoration:none;border:1px solid var(--glass-border-hover);transition:var(--transition-fast);font-family:var(--font-display)}
+.btn-ghost:hover{border-color:var(--silver);color:#fff;transform:translateY(-2px)}
+.hero-stats{display:flex;gap:48px;margin-top:64px}
+.stat-num{font-size:36px;font-weight:800;letter-spacing:-.04em;color:var(--text-primary);line-height:1}
+.stat-label{font-family:var(--font-mono);font-size:11px;color:var(--text-muted);letter-spacing:.08em;text-transform:uppercase;margin-top:4px}
+/* SECTION */
+section{padding:120px 0}
+.section-header{margin-bottom:80px}
+.section-header h2{font-size:clamp(36px,5vw,68px);font-weight:800;letter-spacing:-.03em;line-height:1;margin-top:16px}
+.section-header p{font-size:16px;color:var(--text-secondary);line-height:1.7;max-width:480px;margin-top:20px}
+/* GLASS CARD */
+.glass-card{background:var(--glass-bg);border:1px solid var(--glass-border);border-radius:var(--radius-lg);backdrop-filter:blur(20px);transition:var(--transition);position:relative;overflow:hidden}
+.glass-card::before{content:'';position:absolute;inset:0;border-radius:inherit;background:linear-gradient(135deg,rgba(255,255,255,.04) 0%,transparent 50%);pointer-events:none}
+.glass-card:hover{border-color:var(--glass-border-hover);transform:translateY(-4px);box-shadow:0 32px 64px rgba(0,0,0,.4),0 0 0 1px rgba(79,70,229,.1)}
+/* SERVICES */
+.services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.service-card{padding:40px 36px}
+.service-icon{width:52px;height:52px;border-radius:14px;background:var(--indigo-glow);border:1px solid var(--indigo-glow-strong);display:flex;align-items:center;justify-content:center;margin-bottom:28px;font-size:22px;transition:var(--transition)}
+.service-card:hover .service-icon{background:var(--indigo);border-color:var(--indigo);transform:scale(1.1) rotate(5deg)}
+.service-card h3{font-size:22px;font-weight:700;letter-spacing:-.02em;margin-bottom:14px}
+.service-card p{font-size:14px;color:var(--text-secondary);line-height:1.7}
+.service-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:24px}
+.service-tag{font-family:var(--font-mono);font-size:10px;color:var(--text-muted);border:1px solid var(--silver-faint);padding:3px 8px;border-radius:4px;letter-spacing:.06em}
+/* PROCESS */
+.process-section{background:var(--obsidian-2)}
+.process-steps{display:grid;grid-template-columns:repeat(5,1fr);gap:2px}
+.process-step{padding:40px 28px;background:var(--obsidian-3);position:relative;transition:var(--transition);cursor:default}
+.process-step:first-child{border-radius:var(--radius-md) 0 0 var(--radius-md)}
+.process-step:last-child{border-radius:0 var(--radius-md) var(--radius-md) 0}
+.process-step:hover{background:var(--obsidian-4);z-index:1}
+.step-num{font-family:var(--font-mono);font-size:11px;color:var(--text-muted);letter-spacing:.1em;margin-bottom:20px}
+.step-icon{font-size:32px;margin-bottom:20px}
+.process-step h3{font-size:16px;font-weight:700;margin-bottom:12px;letter-spacing:-.01em}
+.process-step p{font-size:13px;color:var(--text-secondary);line-height:1.6}
+.step-bar{position:absolute;bottom:0;left:0;height:2px;width:0;background:var(--indigo);transition:width .6s cubic-bezier(.25,.46,.45,.94)}
+/* PRICING */
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:start}
+.pricing-card{padding:48px 40px;position:relative}
+.pricing-card.featured{border-color:rgba(79,70,229,.4);background:linear-gradient(135deg,rgba(79,70,229,.08) 0%,rgba(10,10,10,.5) 100%)}
+.pricing-card.featured::after{content:'POPULAR';position:absolute;top:-1px;right:32px;background:var(--indigo);color:#fff;font-family:var(--font-mono);font-size:10px;letter-spacing:.12em;padding:4px 12px;border-radius:0 0 8px 8px}
+.pricing-tier{font-family:var(--font-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted);margin-bottom:16px}
+.pricing-range{font-size:44px;font-weight:800;letter-spacing:-.04em;line-height:1;margin-bottom:6px}
+.pricing-range span{font-size:18px;font-weight:400;color:var(--text-secondary)}
+.pricing-currency{font-family:var(--font-mono);font-size:12px;color:var(--text-muted);margin-bottom:32px}
+.pricing-divider{height:1px;background:var(--glass-border);margin:28px 0}
+.pricing-features{list-style:none;display:flex;flex-direction:column;gap:12px;margin-bottom:36px}
+.pricing-features li{display:flex;align-items:flex-start;gap:10px;font-size:14px;color:var(--text-secondary);line-height:1.5}
+.pricing-features li::before{content:'→';color:var(--indigo-light);font-family:var(--font-mono);flex-shrink:0;margin-top:1px}
+.pricing-btn{display:block;text-align:center;padding:14px;border-radius:var(--radius-sm);font-size:14px;font-weight:600;text-decoration:none;transition:var(--transition-fast);border:none;width:100%;font-family:var(--font-display)}
+.pricing-btn-outline{border:1px solid var(--glass-border-hover);color:var(--text-primary);background:transparent}
+.pricing-btn-outline:hover{border-color:var(--indigo);color:var(--indigo-light)}
+.pricing-btn-filled{background:var(--indigo);color:#fff}
+.pricing-btn-filled:hover{background:var(--indigo-light);transform:translateY(-1px)}
+.pricing-disclaimer{margin-top:40px;padding:20px 28px;border:1px solid var(--silver-faint);border-radius:var(--radius-sm);display:flex;align-items:center;gap:12px}
+.pricing-disclaimer span{font-family:var(--font-mono);font-size:12px;color:var(--text-muted);line-height:1.6}
+.disclaimer-icon{font-size:20px;flex-shrink:0}
+/* BOT */
+.bot-section{background:var(--obsidian-2);overflow:hidden}
+.bot-layout{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.bot-info h2{font-size:clamp(32px,4vw,56px);font-weight:800;letter-spacing:-.03em;line-height:1.05;margin:16px 0 24px}
+.bot-info p{font-size:15px;color:var(--text-secondary);line-height:1.7;margin-bottom:12px}
+.bot-features{margin-top:36px;display:flex;flex-direction:column;gap:16px}
+.bot-feature{display:flex;align-items:flex-start;gap:16px;padding:20px;border-radius:var(--radius-sm);border:1px solid var(--glass-border);transition:var(--transition-fast)}
+.bot-feature:hover{border-color:var(--glass-border-hover)}
+.bot-feature-icon{font-size:20px;flex-shrink:0}
+.bot-feature-text h4{font-size:14px;font-weight:600;margin-bottom:4px}
+.bot-feature-text p{font-size:13px;color:var(--text-secondary);line-height:1.5}
+/* PHONE */
+.phone-wrapper{display:flex;justify-content:center;perspective:1000px}
+.phone-frame{
+  width:300px;
+  height:640px;
+  background:var(--obsidian-3);
+  border-radius:44px;
+  border:2px solid var(--glass-border-hover);
+  padding:14px;
+  position:relative;
+  box-shadow:0 40px 80px rgba(0,0,0,.6), inset 0 1px 0 rgba(255,255,255,.08);
+  transform:rotateY(-8deg) rotateX(2deg);
+  transition:transform 0.1s linear;
+  transform-style:preserve-3d;
+  will-change:transform;
+}
+@keyframes phone-float{0%,100%{transform:rotateY(-8deg) rotateX(2deg) translateY(0)}50%{transform:rotateY(-8deg) rotateX(2deg) translateY(-12px)}}
+.phone-notch{width:90px;height:26px;background:var(--obsidian);border-radius:100px;margin:0 auto 10px;position:relative;z-index:2}
+.phone-screen{background:#17212B;border-radius:32px;height:calc(100% - 50px);overflow:hidden;display:flex;flex-direction:column}
+/* TG HEADER */
+.tg-header{background:#232E3C;padding:10px 14px;display:flex;align-items:center;gap:10px;border-bottom:1px solid rgba(255,255,255,.05);flex-shrink:0}
+.tg-avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--indigo),#8B5CF6);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#fff;flex-shrink:0;position:relative}
+.tg-avatar::after{content:'';position:absolute;bottom:1px;right:1px;width:9px;height:9px;background:#4B9D6A;border-radius:50%;border:2px solid #232E3C}
+.tg-header-info{flex:1;min-width:0}
+.tg-name{font-size:13px;font-weight:600;color:#fff}
+.tg-status{font-size:10px;color:#4B9D6A;font-family:var(--font-mono)}
+.tg-header-actions{display:flex;gap:8px}
+.tg-header-btn{background:none;border:none;color:#8BA7C7;font-size:14px;padding:2px;opacity:.7;transition:opacity .2s}
+.tg-header-btn:hover{opacity:1}
+/* TG MESSAGES */
+.tg-messages{flex:1;padding:10px 10px 6px;overflow-y:auto;display:flex;flex-direction:column;gap:6px;scrollbar-width:thin;scrollbar-color:#2B3D4F transparent}
+.tg-messages::-webkit-scrollbar{width:3px}
+.tg-messages::-webkit-scrollbar-thumb{background:#2B3D4F;border-radius:2px}
+.tg-msg{max-width:88%;padding:7px 10px;border-radius:14px;font-size:11.5px;line-height:1.55;animation:msg-appear .25s cubic-bezier(.25,.46,.45,.94);position:relative}
+@keyframes msg-appear{from{opacity:0;transform:translateY(8px) scale(.95)}to{opacity:1;transform:none}}
+.tg-msg.bot{background:#232E3C;color:#E0E0E0;align-self:flex-start;border-bottom-left-radius:3px}
+.tg-msg.user{background:linear-gradient(135deg,#2B5278,#1E3F5E);color:#fff;align-self:flex-end;border-bottom-right-radius:3px}
+.tg-msg-meta{display:flex;align-items:center;justify-content:flex-end;gap:4px;margin-top:3px}
+.tg-msg-time{font-size:9px;color:rgba(255,255,255,.35)}
+.tg-msg-check{font-size:10px;color:#4B9D6A;line-height:1}
+.tg-date-sep{align-self:center;font-size:10px;color:rgba(255,255,255,.25);font-family:var(--font-mono);background:rgba(255,255,255,.05);padding:3px 10px;border-radius:100px;margin:4px 0}
+/* QUICK REPLIES */
+.tg-quick{padding:6px 8px;display:flex;flex-wrap:wrap;gap:5px;background:#1A2533;border-top:1px solid rgba(255,255,255,.04);flex-shrink:0}
+.tg-quick-btn{background:#2B3D4F;border:1px solid rgba(255,255,255,.06);color:#8BA7C7;padding:5px 10px;border-radius:100px;font-size:10px;transition:all .18s;font-family:var(--font-display);white-space:nowrap}
+.tg-quick-btn:hover,.tg-quick-btn:active{background:var(--indigo);color:#fff;border-color:var(--indigo);transform:scale(.97)}
+/* INPUT */
+.tg-input-bar{display:flex;align-items:center;gap:6px;padding:8px 10px;background:#232E3C;border-top:1px solid rgba(255,255,255,.04);flex-shrink:0}
+.tg-input{flex:1;background:#17212B;border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:6px 12px;font-size:11px;color:#E0E0E0;outline:none;font-family:var(--font-display);transition:border-color .2s}
+.tg-input::placeholder{color:#4A6070}
+.tg-input:focus{border-color:rgba(79,70,229,.4)}
+.tg-send-btn{width:30px;height:30px;border-radius:50%;background:var(--indigo);border:none;color:#fff;font-size:13px;display:flex;align-items:center;justify-content:center;transition:all .18s;flex-shrink:0}
+.tg-send-btn:hover{background:var(--indigo-light);transform:scale(1.08)}
+.tg-send-btn:active{transform:scale(.94)}
+.tg-attach-btn{background:none;border:none;color:#4A6070;font-size:16px;padding:2px;transition:color .2s;flex-shrink:0}
+.tg-attach-btn:hover{color:#8BA7C7}
+/* TYPING */
+.tg-typing{display:flex;align-items:center;gap:3px;padding:8px 12px;background:#232E3C;border-radius:14px;border-bottom-left-radius:3px;width:fit-content;align-self:flex-start}
+.typing-dot{width:5px;height:5px;background:#8BA7C7;border-radius:50%;animation:typing 1.2s ease-in-out infinite}
+.typing-dot:nth-child(2){animation-delay:.2s}.typing-dot:nth-child(3){animation-delay:.4s}
+@keyframes typing{0%,60%,100%{transform:translateY(0);opacity:.35}30%{transform:translateY(-4px);opacity:1}}
+/* RESET BTN */
+.bot-reset{margin-top:12px;text-align:center}
+.bot-reset-btn{background:none;border:1px solid var(--glass-border);color:var(--text-muted);font-size:11px;font-family:var(--font-mono);padding:5px 14px;border-radius:100px;transition:all .2s;letter-spacing:.06em}
+.bot-reset-btn:hover{border-color:var(--indigo);color:var(--indigo-light)}
+/* FORM */
+.form-section{background:var(--obsidian)}
+.form-layout{display:grid;grid-template-columns:1fr 1.4fr;gap:80px;align-items:start}
+.form-info h2{font-size:clamp(28px,3.5vw,48px);font-weight:800;letter-spacing:-.03em;line-height:1.05;margin:16px 0 24px}
+.form-info p{font-size:15px;color:var(--text-secondary);line-height:1.7;margin-bottom:28px}
+.contact-methods{display:flex;flex-direction:column;gap:12px;margin-top:8px}
+.contact-method{display:flex;align-items:center;gap:12px;font-size:14px;color:var(--text-secondary);text-decoration:none;transition:color var(--transition-fast)}
+.contact-method:hover{color:var(--text-primary)}
+.contact-method-icon{width:36px;height:36px;background:var(--glass-bg);border:1px solid var(--glass-border);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.form-container{padding:48px}
+.form-progress{display:flex;align-items:center;margin-bottom:40px}
+.progress-step{display:flex;align-items:center;flex:1}
+.progress-dot{width:28px;height:28px;border-radius:50%;border:2px solid var(--silver-faint);display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);font-size:11px;color:var(--text-muted);transition:var(--transition-fast);flex-shrink:0}
+.progress-dot.active{border-color:var(--indigo);background:var(--indigo);color:#fff}
+.progress-dot.done{border-color:var(--indigo);background:transparent;color:var(--indigo-light)}
+.progress-line{flex:1;height:1px;background:var(--silver-faint);transition:background var(--transition)}
+.progress-line.active{background:var(--indigo)}
+.form-step{display:none;animation:step-in .4s ease}
+.form-step.active{display:block}
+@keyframes step-in{from{opacity:0;transform:translateX(16px)}to{opacity:1;transform:none}}
+.step-title{font-size:22px;font-weight:700;letter-spacing:-.02em;margin-bottom:8px}
+.step-subtitle{font-size:13px;color:var(--text-muted);font-family:var(--font-mono);margin-bottom:28px}
+.form-field{margin-bottom:20px}
+.form-label{display:block;font-size:12px;font-family:var(--font-mono);letter-spacing:.08em;color:var(--text-muted);text-transform:uppercase;margin-bottom:8px}
+.form-input{width:100%;background:var(--obsidian-3);border:1px solid var(--silver-faint);border-radius:var(--radius-sm);padding:14px 16px;color:var(--text-primary);font-family:var(--font-display);font-size:15px;outline:none;transition:var(--transition-fast);-webkit-appearance:none}
+.form-input::placeholder{color:var(--text-muted);font-size:14px}
+.form-input:focus{border-color:var(--indigo);box-shadow:0 0 0 3px var(--indigo-glow)}
+.form-input.error{border-color:#ef4444;box-shadow:0 0 0 3px rgba(239,68,68,.15)}
+.form-input.valid{border-color:#22c55e}
+.field-error{font-family:var(--font-mono);font-size:11px;color:#ef4444;margin-top:6px;display:none}
+.field-error.show{display:block}
+.project-types{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.project-type{padding:14px 16px;border:1px solid var(--silver-faint);border-radius:var(--radius-sm);font-size:13px;color:var(--text-secondary);transition:var(--transition-fast);background:var(--obsidian-3);text-align:left;font-family:var(--font-display)}
+.project-type:hover{border-color:var(--glass-border-hover);color:var(--text-primary)}
+.project-type.selected{border-color:var(--indigo);color:var(--indigo-light);background:var(--indigo-glow)}
+.budget-options{display:flex;flex-direction:column;gap:10px}
+.budget-option{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border:1px solid var(--silver-faint);border-radius:var(--radius-sm);transition:var(--transition-fast);background:var(--obsidian-3);width:100%;font-family:var(--font-display)}
+.budget-option:hover{border-color:var(--glass-border-hover)}
+.budget-option.selected{border-color:var(--indigo);background:var(--indigo-glow)}
+.budget-option-name{font-size:14px;font-weight:500;color:var(--text-primary)}
+.budget-option-price{font-family:var(--font-mono);font-size:12px;color:var(--text-muted)}
+.form-nav{display:flex;justify-content:space-between;align-items:center;margin-top:28px}
+.btn-form-next{background:var(--indigo);color:#fff;border:none;padding:13px 28px;border-radius:var(--radius-sm);font-size:14px;font-weight:600;transition:var(--transition-fast);font-family:var(--font-display);margin-left:auto}
+.btn-form-next:hover{background:var(--indigo-light);transform:translateY(-1px)}
+.btn-form-back{background:transparent;color:var(--text-muted);border:none;padding:13px 0;font-size:14px;transition:color var(--transition-fast);font-family:var(--font-display)}
+.btn-form-back:hover{color:var(--text-primary)}
+.form-success{display:none;text-align:center;padding:40px 20px;animation:success-in .6s cubic-bezier(.25,.46,.45,.94)}
+@keyframes success-in{from{opacity:0;transform:scale(.9)}to{opacity:1;transform:none}}
+.success-icon{width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,var(--indigo),#8B5CF6);display:flex;align-items:center;justify-content:center;font-size:36px;margin:0 auto 28px;animation:success-pulse .6s .3s cubic-bezier(.25,.46,.45,.94) forwards}
+@keyframes success-pulse{0%{box-shadow:0 0 0 0 rgba(79,70,229,.5)}100%{box-shadow:0 0 0 24px rgba(79,70,229,0)}}
+.form-success h3{font-size:26px;font-weight:700;letter-spacing:-.02em;margin-bottom:12px}
+.form-success p{font-size:14px;color:var(--text-secondary);line-height:1.7}
+/* FOOTER */
+footer{background:var(--obsidian-2);border-top:1px solid var(--glass-border);padding:60px 0 40px}
+.footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:60px;margin-bottom:60px}
+.footer-brand p{font-size:13px;color:var(--text-secondary);line-height:1.7;max-width:280px;margin-top:16px}
+.footer-col h4{font-family:var(--font-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted);margin-bottom:20px}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+.footer-col ul a{font-size:13px;color:var(--text-secondary);text-decoration:none;transition:color var(--transition-fast)}
+.footer-col ul a:hover{color:var(--text-primary)}
+.footer-bottom{display:flex;align-items:center;justify-content:space-between;padding-top:28px;border-top:1px solid var(--glass-border)}
+.footer-legal{display:flex;align-items:center;gap:24px}
+.unp-badge{display:flex;align-items:center;gap:8px;background:var(--obsidian-3);border:1px solid var(--silver-faint);padding:8px 16px;border-radius:6px}
+.unp-label{font-family:var(--font-mono);font-size:10px;letter-spacing:.1em;color:var(--text-muted);text-transform:uppercase}
+.unp-value{font-family:var(--font-mono);font-size:13px;color:var(--silver);font-weight:500}
+.footer-copy{font-family:var(--font-mono);font-size:11px;color:var(--text-muted)}
+.section-divider{height:1px;background:linear-gradient(90deg,transparent,var(--glass-border),transparent)}
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .7s cubic-bezier(.25,.46,.45,.94),transform .7s cubic-bezier(.25,.46,.45,.94)}
+.reveal.visible{opacity:1;transform:none}
+.reveal-delay-1{transition-delay:.1s}.reveal-delay-2{transition-delay:.2s}.reveal-delay-3{transition-delay:.3s}.reveal-delay-4{transition-delay:.4s}
+
+/* ── RESPONSIVE OVERRIDES (MODIFIED FOR ANIMATIONS) ── */
+@media(max-width:1024px){
+  .services-grid{grid-template-columns:repeat(2,1fr)}
+  .process-steps{grid-template-columns:repeat(2,1fr); gap: 10px;}
+  .process-step:first-child, .process-step:last-child { border-radius: var(--radius-md); }
+  .pricing-grid{grid-template-columns:1fr;max-width:480px;margin:0 auto}
+  .bot-layout{grid-template-columns:1fr}
+  .phone-wrapper{display:flex;margin-top:48px}
+  .phone-frame{width:100%;max-width:280px;height:540px;border-radius:38px; transform: rotateY(-8deg) rotateX(2deg) !important; animation: phone-float 4s ease-in-out infinite !important; }
+  .form-layout{grid-template-columns:1fr}
+  .footer-top{grid-template-columns:1fr 1fr;gap:40px}
+}
+
+@media(max-width:768px){
+  .container{padding:0 20px}
+  section{padding:80px 0}
+  h1.hero-title{font-size:42px}
+  .hero-stats{gap:24px;flex-wrap:wrap;justify-content:center}
+  .services-grid, .pricing-grid, .process-steps, .project-types{grid-template-columns:1fr}
+  .footer-top{grid-template-columns:1fr}
+  .footer-bottom{flex-direction:column;gap:20px;text-align:center}
+  .nav-links{display:none}
+  .form-container{padding:32px 24px}
+  
+  /* Bot Mobile Fix */
+  .tg-quick{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:12px;background:#1A2533;}
+  .tg-quick-btn{white-space:normal;text-align:center;padding:10px 6px;font-size:11px; height: auto; display: flex; align-items: center; justify-content: center; border-radius: 12px;}
+  .phone-wrapper{display:flex;margin-top:40px; perspective: 1000px;}
+  .phone-frame{max-width:260px;height:520px;border-radius:34px; transform: rotateY(-6deg) rotateX(2deg) !important;}
+}
+</style>
+</head>
+<body>
+
+<nav id="navbar" role="navigation" aria-label="Основная навигация">
+  <div class="container">
+    <div class="nav-inner">
+      <a href="#" class="logo" aria-label="VIAB — главная">VIAB<span class="logo-dot" aria-hidden="true"></span></a>
+      <ul class="nav-links">
+        <li><a href="#services">Услуги</a></li>
+        <li><a href="#process">Процесс</a></li>
+        <li><a href="#pricing">Тарифы</a></li>
+        <li><a href="#bot-demo">Бот</a></li>
+        <li><a href="#contact">Контакт</a></li>
+      </ul>
+      <a href="#contact" class="nav-cta">Обсудить проект</a>
+    </div>
+  </div>
+</nav>
+
+<main>
+<section class="hero" id="home" aria-labelledby="hero-title">
+  <div class="hero-bg" aria-hidden="true"></div>
+  <div class="hero-grid" aria-hidden="true"></div>
+  <div class="container">
+    <div class="hero-content">
+      <div class="hero-eyebrow reveal">
+        <span class="hero-eyebrow-line" aria-hidden="true"></span>
+        <span>Digital Agency · Беларусь</span>
+      </div>
+      <h1 class="hero-title reveal reveal-delay-1" id="hero-title">
+        Сложные<br><em>веб-решения</em><br><span class="accent">для бизнеса</span>
+      </h1>
+      <p class="hero-sub reveal reveal-delay-2">Разрабатываем высоконагруженные системы, корпоративные сайты и умные Telegram-боты. Скорость, уникальность, сложные интеграции.</p>
+      <div class="hero-actions reveal reveal-delay-3">
+        <a href="#contact" class="btn-primary">Начать проект <span aria-hidden="true">→</span></a>
+        <a href="#process" class="btn-ghost">Как мы работаем</a>
+      </div>
+      <div class="hero-stats reveal reveal-delay-4">
+        <div class="stat"><div class="stat-num" id="counter-projects">0</div><div class="stat-label">Проектов</div></div>
+        <div class="stat"><div class="stat-num" id="counter-clients">0</div><div class="stat-label">Клиентов</div></div>
+        <div class="stat"><div class="stat-num" id="counter-years">0</div><div class="stat-label">Лет опыта</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider" aria-hidden="true"></div>
+
+<section id="services" aria-labelledby="services-title">
+  <div class="container">
+    <div class="section-header">
+      <div class="tag reveal">Экспертиза</div>
+      <h2 class="reveal reveal-delay-1" id="services-title">Что мы строим</h2>
+      <p class="reveal reveal-delay-2">От лендингов до высоконагруженных платформ — реализуем продукты любой сложности</p>
+    </div>
+    <div class="services-grid">
+      <article class="glass-card service-card reveal">
+        <div class="service-icon" aria-hidden="true">⬡</div>
+        <h3>Корпоративные сайты</h3>
+        <p>Многостраничные платформы с CMS, SEO-оптимизацией и интеграциями. Проектируем архитектуру под ваши бизнес-процессы.</p>
+        <div class="service-tags"><span class="service-tag">Next.js</span><span class="service-tag">Headless CMS</span><span class="service-tag">SEO</span></div>
+      </article>
+      <article class="glass-card service-card reveal reveal-delay-1">
+        <div class="service-icon" aria-hidden="true">⟡</div>
+        <h3>Telegram Mini Apps</h3>
+        <p>Полноценные веб-приложения внутри Telegram с авторизацией, платежами и интеграцией с вашим бэкендом.</p>
+        <div class="service-tags"><span class="service-tag">TWA</span><span class="service-tag">Telegram Pay</span><span class="service-tag">API</span></div>
+      </article>
+      <article class="glass-card service-card reveal reveal-delay-2">
+        <div class="service-icon" aria-hidden="true">◈</div>
+        <h3>Умные TG-боты</h3>
+        <p>Боты для автоматизации продаж, поддержки и внутренних процессов. Интеграции с CRM, базами данных и AI.</p>
+        <div class="service-tags"><span class="service-tag">Python</span><span class="service-tag">CRM</span><span class="service-tag">AI</span></div>
+      </article>
+      <article class="glass-card service-card reveal">
+        <div class="service-icon" aria-hidden="true">⌬</div>
+        <h3>Лендинги и LP</h3>
+        <p>Конверсионные посадочные страницы с анимациями, A/B-тестированием и подключёнными аналитическими инструментами.</p>
+        <div class="service-tags"><span class="service-tag">Framer Motion</span><span class="service-tag">Analytics</span><span class="service-tag">CRO</span></div>
+      </article>
+      <article class="glass-card service-card reveal reveal-delay-1">
+        <div class="service-icon" aria-hidden="true">⬬</div>
+        <h3>Автоматизация бизнеса</h3>
+        <p>Интеграции между системами, webhook-цепочки, автоматический документооборот и уведомления в реальном времени.</p>
+        <div class="service-tags"><span class="service-tag">n8n</span><span class="service-tag">Webhooks</span><span class="service-tag">API</span></div>
+      </article>
+      <article class="glass-card service-card reveal reveal-delay-2">
+        <div class="service-icon" aria-hidden="true">⬙</div>
+        <h3>Высоконагруженные системы</h3>
+        <p>Платформы под тысячи одновременных пользователей: микросервисная архитектура, кэширование, балансировка нагрузки.</p>
+        <div class="service-tags"><span class="service-tag">Microservices</span><span class="service-tag">Redis</span><span class="service-tag">Docker</span></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider" aria-hidden="true"></div>
+
+<section id="process" class="process-section" aria-labelledby="process-title">
+  <div class="container">
+    <div class="section-header">
+      <div class="tag reveal">Методология</div>
+      <h2 class="reveal reveal-delay-1" id="process-title">Как мы строим продукты</h2>
+      <p class="reveal reveal-delay-2">Пять этапов, которые превращают идею в работающий, масштабируемый продукт</p>
+    </div>
+    <div class="process-steps reveal">
+      <div class="process-step">
+        <div class="step-num">01</div><div class="step-icon" aria-hidden="true">◎</div>
+        <h3>Discovery</h3>
+        <p>Разбираем бизнес-задачу, аудиторию, конкурентов. Формируем ТЗ и KPI проекта.</p>
+        <div class="step-bar" aria-hidden="true"></div>
+      </div>
+      <div class="process-step">
+        <div class="step-num">02</div><div class="step-icon" aria-hidden="true">⬡</div>
+        <h3>Архитектура</h3>
+        <p>Проектируем структуру: БД, API, интеграции, инфраструктура и стек технологий.</p>
+        <div class="step-bar" aria-hidden="true"></div>
+      </div>
+      <div class="process-step">
+        <div class="step-num">03</div><div class="step-icon" aria-hidden="true">◈</div>
+        <h3>UI/UX дизайн</h3>
+        <p>Уникальная дизайн-система: wireframes, прототипы, анимации и адаптивная вёрстка.</p>
+        <div class="step-bar" aria-hidden="true"></div>
+      </div>
+      <div class="process-step">
+        <div class="step-num">04</div><div class="step-icon" aria-hidden="true">⟡</div>
+        <h3>Разработка</h3>
+        <p>Фронтенд, бэкенд, интеграции. CI/CD и автодеплой на каждом спринте.</p>
+        <div class="step-bar" aria-hidden="true"></div>
+      </div>
+      <div class="process-step">
+        <div class="step-num">05</div><div class="step-icon" aria-hidden="true">⌬</div>
+        <h3>Запуск и рост</h3>
+        <p>Нагрузочное тестирование, мониториринг, обучение команды и поддержка после запуска.</p>
+        <div class="step-bar" aria-hidden="true"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider" aria-hidden="true"></div>
+
+<section id="pricing" aria-labelledby="pricing-title">
+  <div class="container">
+    <div class="section-header">
+      <div class="tag reveal">Прозрачные цены</div>
+      <h2 class="reveal reveal-delay-1" id="pricing-title">Тарифы</h2>
+      <p class="reveal reveal-delay-2">Ориентировочные диапазоны. Финальная стоимость определяется после обсуждения задачи</p>
+    </div>
+    <div class="pricing-grid">
+      <article class="glass-card pricing-card reveal">
+        <div class="pricing-tier">Базовый</div>
+        <div class="pricing-range">600 <span>—</span> 900</div>
+        <div class="pricing-currency">BYN · белорусских рублей</div>
+        <ul class="pricing-features" aria-label="Включено в тариф Базовый">
+          <li>Лендинг или промо-сайт</li><li>Простой Telegram-бот</li><li>Адаптивная вёрстка</li><li>Базовая SEO-оптимизация</li><li>1 месяц поддержки</li>
+        </ul>
+        <div class="pricing-divider" aria-hidden="true"></div>
+        <button class="pricing-btn pricing-btn-outline" onclick="openForm('Базовый')">Обсудить проект</button>
+      </article>
+      <article class="glass-card pricing-card featured reveal reveal-delay-1">
+        <div class="pricing-tier">Бизнес</div>
+        <div class="pricing-range">1000 <span>—</span> 1400</div>
+        <div class="pricing-currency">BYN · белорусских рублей</div>
+        <ul class="pricing-features" aria-label="Включено в тариф Бизнес">
+          <li>Корпоративный сайт с CMS</li><li>Бот с автоматизацией и CRM</li><li>Кастомный UI/UX дизайн</li><li>Интеграции с 3+ сервисами</li><li>Аналитика и A/B-тесты</li><li>3 месяца поддержки</li>
+        </ul>
+        <div class="pricing-divider" aria-hidden="true"></div>
+        <button class="pricing-btn pricing-btn-filled" onclick="openForm('Бизнес')">Обсудить проект</button>
+      </article>
+      <article class="glass-card pricing-card reveal reveal-delay-2">
+        <div class="pricing-tier">Премиум</div>
+        <div class="pricing-range">1500 <span>—</span> 2100</div>
+        <div class="pricing-currency">BYN · белорусских рублей</div>
+        <ul class="pricing-features" aria-label="Включено в тариф Премиум">
+          <li>Высоконагруженная платформа</li><li>Telegram Mini App (полная)</li><li>Микросервисная архитектура</li><li>Кастомные интеграции и API</li><li>Нагрузочное тестирование</li><li>6 месяцев поддержки</li>
+        </ul>
+        <div class="pricing-divider" aria-hidden="true"></div>
+        <button class="pricing-btn pricing-btn-outline" onclick="openForm('Премиум')">Обсудить проект</button>
+      </article>
+    </div>
+    <div class="pricing-disclaimer reveal">
+      <span class="disclaimer-icon" aria-hidden="true">ℹ</span>
+      <span><strong>Цены ориентировочные, каждый проект обсуждается индивидуально.</strong> Финальная стоимость зависит от объёма функционала, сроков и сложности интеграций. Свяжитесь — рассчитаем точную смету бесплатно.</span>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider" aria-hidden="true"></div>
+
+<section id="bot-demo" class="bot-section" aria-labelledby="bot-title">
+  <div class="container">
+    <div class="bot-layout">
+      <div class="bot-info">
+        <div class="tag reveal">Демо</div>
+        <h2 class="reveal reveal-delay-1" id="bot-title">Умный<br>Telegram-бот</h2>
+        <p class="reveal reveal-delay-2">Пообщайтесь с демо-версией VIAB Bot — увидите, как работает реальный бот для бизнеса. Меню, команды, динамические ответы.</p>
+        <div class="bot-features reveal reveal-delay-3">
+          <div class="bot-feature">
+            <div class="bot-feature-icon" aria-hidden="true">⚡</div>
+            <div class="bot-feature-text"><h4>Мгновенные ответы</h4><p>Обработка запросов за &lt;200мс. Клиент не ждёт.</p></div>
+          </div>
+          <div class="bot-feature">
+            <div class="bot-feature-icon" aria-hidden="true">🔗</div>
+            <div class="bot-feature-text"><h4>Интеграция с CRM</h4><p>Синхронизируем каждое взаимодействие с вашей базой данных.</p></div>
+          </div>
+          <div class="bot-feature">
+            <div class="bot-feature-icon" aria-hidden="true">🤖</div>
+            <div class="bot-feature-text"><h4>AI-ответы</h4><p>Подключаем GPT или собственные модели для умных диалогов.</p></div>
+          </div>
+        </div>
+      </div>
+      <div class="phone-wrapper reveal reveal-delay-2" aria-label="Интерактивный демо Telegram-бота">
+        <div>
+          <div class="phone-frame">
+            <div class="phone-notch" aria-hidden="true"></div>
+            <div class="phone-screen">
+              <div class="tg-header">
+                <div class="tg-avatar" aria-hidden="true">V</div>
+                <div class="tg-header-info">
+                  <div class="tg-name">VIAB Bot</div>
+                  <div class="tg-status" id="tg-status-text">● онлайн</div>
+                </div>
+                <div class="tg-header-actions">
+                  <button class="tg-header-btn" title="Поиск" aria-label="Поиск">🔍</button>
+                  <button class="tg-header-btn" title="Меню" aria-label="Меню">⋮</button>
+                </div>
+              </div>
+              <div class="tg-messages" id="tg-messages" role="log" aria-live="polite" aria-label="Диалог с ботом">
+                <div class="tg-date-sep">сегодня</div>
+              </div>
+              <div class="tg-quick" id="tg-quick" role="group" aria-label="Быстрые ответы">
+                <button class="tg-quick-btn" onclick="botReply('services')">🚀 Услуги</button>
+                <button class="tg-quick-btn" onclick="botReply('prices')">💰 Цены</button>
+                <button class="tg-quick-btn" onclick="botReply('portfolio')">📁 Портфолио</button>
+                <button class="tg-quick-btn" onclick="botReply('contact')">📞 Связаться</button>
+                <button class="tg-quick-btn" onclick="botReply('stack')">⚙️ Технологии</button>
+                <button class="tg-quick-btn" onclick="botReply('timeline')">🗓 Сроки</button>
+              </div>
+              <div class="tg-input-bar">
+                <button class="tg-attach-btn" aria-label="Прикрепить файл">📎</button>
+                <input class="tg-input" id="tg-user-input" type="text" placeholder="Написать сообщение..." maxlength="120" aria-label="Поле ввода сообщения">
+                <button class="tg-send-btn" id="tg-send" onclick="sendUserMsg()" aria-label="Отправить">➤</button>
+              </div>
+            </div>
+          </div>
+          <div class="bot-reset">
+            <button class="bot-reset-btn" onclick="resetBot()">↺ сбросить диалог</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider" aria-hidden="true"></div>
+
+<section id="contact" class="form-section" aria-labelledby="form-title">
+  <div class="container">
+    <div class="form-layout">
+      <div class="form-info">
+        <div class="tag reveal">Старт проекта</div>
+        <h2 class="reveal reveal-delay-1" id="form-title">Обсудим<br>ваш проект</h2>
+        <p class="reveal reveal-delay-2">Заполните форму — мы свяжемся в течение 2 часов, обсудим задачу и дадим предварительную оценку бесплатно.</p>
+        <div class="contact-methods reveal reveal-delay-3">
+          <a href="https://t.me/V_uzername" class="contact-method" target="_blank" rel="noopener noreferrer">
+            <span class="contact-method-icon" aria-hidden="true">✈</span>Telegram: @V_uzername
+          </a>
+          <a href="mailto:viabbots.company@gmail.com" class="contact-method">
+            <span class="contact-method-icon" aria-hidden="true">✉</span>viabbots.company@gmail.com
+          </a>
+          <a href="tel:+375291856137" class="contact-method">
+            <span class="contact-method-icon" aria-hidden="true">📞</span>+375 29 185 6137
+          </a>
+        </div>
+      </div>
+      <div class="glass-card form-container reveal reveal-delay-1">
+        <div class="form-progress" role="progressbar" aria-label="Прогресс формы" aria-valuenow="1" aria-valuemin="1" aria-valuemax="4" id="form-progress">
+          <div class="progress-step"><div class="progress-dot active" id="pd-1">1</div><div class="progress-line" id="pl-1"></div></div>
+          <div class="progress-step"><div class="progress-dot" id="pd-2">2</div><div class="progress-line" id="pl-2"></div></div>
+          <div class="progress-step"><div class="progress-dot" id="pd-3">3</div><div class="progress-line" id="pl-3"></div></div>
+          <div class="progress-step"><div class="progress-dot" id="pd-4">4</div></div>
+        </div>
+        <div id="form-body">
+          <div class="form-step active" id="step-1">
+            <div class="step-title">Знакомство</div><div class="step-subtitle">шаг 1 из 4</div>
+            <div class="form-field">
+              <label class="form-label" for="f-name">Ваше имя *</label>
+              <input class="form-input" id="f-name" type="text" placeholder="Александр Иванов" autocomplete="name" required>
+              <div class="field-error" id="err-name">Введите ваше имя</div>
+            </div>
+            <div class="form-field">
+              <label class="form-label" for="f-phone">Телефон *</label>
+              <input class="form-input" id="f-phone" type="tel" placeholder="+375 (XX) XXX-XX-XX" autocomplete="tel" required>
+              <div class="field-error" id="err-phone">Введите номер в формате +375 (XX) XXX-XX-XX</div>
+            </div>
+            <div class="form-nav"><button class="btn-form-next" onclick="nextStep(1)">Далее →</button></div>
+          </div>
+          <div class="form-step" id="step-2">
+            <div class="step-title">Telegram</div><div class="step-subtitle">шаг 2 из 4</div>
+            <div class="form-field">
+              <label class="form-label" for="f-tg">Telegram-аккаунт</label>
+              <input class="form-input" id="f-tg" type="text" placeholder="@username" autocomplete="off">
+              <div class="field-error" id="err-tg">Введите username в формате @username</div>
+            </div>
+            <div class="form-nav">
+              <button class="btn-form-back" onclick="prevStep(2)">← Назад</button>
+              <button class="btn-form-next" onclick="nextStep(2)">Далее →</button>
+            </div>
+          </div>
+          <div class="form-step" id="step-3">
+            <div class="step-title">Тип проекта</div><div class="step-subtitle">шаг 3 из 4</div>
+            <div class="project-types" role="group" aria-label="Тип проекта">
+              <button class="project-type" onclick="selectType(this,'Лендинг')">🌐 Лендинг / LP</button>
+              <button class="project-type" onclick="selectType(this,'Корпоративный сайт')">🏢 Корпоративный сайт</button>
+              <button class="project-type" onclick="selectType(this,'Telegram-бот')">🤖 Telegram-бот</button>
+              <button class="project-type" onclick="selectType(this,'Mini App')">⚡ Mini App (TWA)</button>
+              <button class="project-type" onclick="selectType(this,'Автоматизация')">🔗 Автоматизация</button>
+              <button class="project-type" onclick="selectType(this,'Другое')">💡 Другое</button>
+            </div>
+            <div class="field-error" id="err-type" style="margin-top:12px">Выберите тип проекта</div>
+            <div class="form-nav">
+              <button class="btn-form-back" onclick="prevStep(3)">← Назад</button>
+              <button class="btn-form-next" onclick="nextStep(3)">Далее →</button>
+            </div>
+          </div>
+          <div class="form-step" id="step-4">
+            <div class="step-title">Бюджет</div><div class="step-subtitle">шаг 4 из 4</div>
+            <div class="budget-options" role="group" aria-label="Бюджет">
+              <button class="budget-option" onclick="selectBudget(this,'Базовый')"><span class="budget-option-name">Базовый</span><span class="budget-option-price">600 — 900 BYN</span></button>
+              <button class="budget-option" onclick="selectBudget(this,'Бизнес')"><span class="budget-option-name">Бизнес</span><span class="budget-option-price">1000 — 1400 BYN</span></button>
+              <button class="budget-option" onclick="selectBudget(this,'Премиум')"><span class="budget-option-name">Премиум</span><span class="budget-option-price">1500 — 2100 BYN</span></button>
+              <button class="budget-option" onclick="selectBudget(this,'Обсудим')"><span class="budget-option-name">Обсудим индивидуально</span><span class="budget-option-price">—</span></button>
+            </div>
+            <div class="field-error" id="err-budget" style="margin-top:12px">Выберите бюджет</div>
+            <div class="form-nav">
+              <button class="btn-form-back" onclick="prevStep(4)">← Назад</button>
+              <button class="btn-form-next" onclick="submitForm()">Отправить заявку ✓</button>
+            </div>
+          </div>
+        </div>
+        <div class="form-success" id="form-success" role="status" aria-live="polite">
+          <div class="success-icon" aria-hidden="true">✓</div>
+          <h3>Заявка отправлена!</h3>
+          <p>Мы получили ваш запрос и свяжемся с вами в течение 2 часов.<br>Хорошего дня!</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer role="contentinfo">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="#" class="logo" aria-label="VIAB">VIAB<span class="logo-dot" aria-hidden="true"></span></a>
+        <p>Digital-агентство. Разрабатываем сложные веб-решения и умные TG-боты для бизнеса любого масштаба. Беларусь.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Услуги</h4>
+        <ul>
+          <li><a href="#services">Корпоративные сайты</a></li>
+          <li><a href="#services">Telegram Mini Apps</a></li>
+          <li><a href="#services">Умные боты</a></li>
+          <li><a href="#services">Лендинги</a></li>
+          <li><a href="#services">Автоматизация</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Компания</h4>
+        <ul>
+          <li><a href="#process">Как мы работаем</a></li>
+          <li><a href="#pricing">Тарифы</a></li>
+          <li><a href="#contact">Контакты</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Контакты</h4>
+        <ul>
+          <li><a href="https://t.me/V_uzername" target="_blank" rel="noopener noreferrer">Telegram</a></li>
+          <li><a href="mailto:viabbots.company@gmail.com">viabbots.company@gmail.com</a></li>
+          <li><a href="tel:+375291856137">+375 29 185 6137</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-legal">
+        <div class="unp-badge" aria-label="Унифицированный номер плательщика">
+          <span class="unp-label">УНП</span>
+          <span class="unp-value">BE8793005</span>
+        </div>
+        <span class="footer-copy">Республика Беларусь</span>
+      </div>
+      <div class="footer-copy">© <span id="year"></span> VIAB. Все права защищены.</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ── NAVBAR ── */
+const navbar=document.getElementById('navbar');
+window.addEventListener('scroll',()=>navbar.classList.toggle('scrolled',scrollY>60),{passive:true});
+
+/* ── REVEAL ── */
+const io=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target)}})},{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+/* ── COUNTERS ── */
+function animateCounter(el,target,suffix){
+  let n=0;const step=target/60;
+  const tick=()=>{n=Math.min(n+step,target);el.textContent=Math.round(n)+suffix;if(n<target)requestAnimationFrame(tick)};tick();
+}
+const cio=new IntersectionObserver(entries=>{
+  if(entries[0].isIntersecting){
+    animateCounter(document.getElementById('counter-projects'),47,'+');
+    animateCounter(document.getElementById('counter-clients'),32,'+');
+    animateCounter(document.getElementById('counter-years'),5,'+');
+    cio.disconnect();
+  }
+},{threshold:.3});
+const hs=document.querySelector('.hero-stats');if(hs)cio.observe(hs);
+
+/* ── CARD LIGHTING ── */
+document.querySelectorAll('.glass-card').forEach(card=>{
+  card.addEventListener('mousemove',function(e){
+    const r=this.getBoundingClientRect();
+    const x=((e.clientX-r.left)/r.width)*100,y=((e.clientY-r.top)/r.height)*100;
+    this.style.background=`radial-gradient(circle at ${x}% ${y}%,rgba(79,70,229,.07) 0%,rgba(255,255,255,.02) 40%,rgba(255,255,255,.01) 100%)`;
+  });
+  card.addEventListener('mouseleave',function(){this.style.background=''});
+});
+
+/* ── PROCESS BAR ── */
+document.querySelectorAll('.process-step').forEach(s=>{
+  s.addEventListener('mouseenter',()=>s.querySelector('.step-bar').style.width='100%');
+  s.addEventListener('mouseleave',()=>s.querySelector('.step-bar').style.width='0');
+});
+
+/* ── BOT ── */
+const botReplies={
+  init:[
+    {f:'bot',t:'👋 Привет! Я VIAB Bot — демо умного бота для бизнеса.\n\nВыберите тему или напишите вопрос ниже 👇'}
+  ],
+  services:[
+    {f:'user',t:'🚀 Услуги'},
+    {f:'bot',t:'🛠 Разрабатываем под ключ:\n\n• Корпоративные сайты и платформы\n• Telegram Mini Apps\n• Умные боты с AI\n• Лендинги и LP\n• CRM-интеграции\n• Системы автоматизации\n\nЧто интересует подробнее?'}
+  ],
+  prices:[
+    {f:'user',t:'💰 Цены'},
+    {f:'bot',t:'💳 Тарифы:\n\n🟦 Базовый — 600–900 BYN\nЛендинг + простой бот\n\n🟪 Бизнес — 1000–1400 BYN\nКорпоративный сайт + CRM-бот\n\n🟨 Премиум — 1500–2100 BYN\nВысоконагруженная платформа\n\n📊 Точную смету считаем бесплатно!'}
+  ],
+  portfolio:[
+    {f:'user',t:'📁 Портфолио'},
+    {f:'bot',t:'🔒 Кейсы обсуждаем лично — уважаем конфиденциальность клиентов.\n\nЗа 5 лет: 47 проектов, 32 клиента, 0 провалов.\n\nНапишите нам — расскажем о релевантных проектах в вашей нише 🎯'}
+  ],
+  contact:[
+    {f:'user',t:'📞 Связаться'},
+    {f:'bot',t:'📬 Контакты VIAB:\n\n✈️ Telegram: @V_uzername\n✉️ viabbots.company@gmail.com\n📞 +375 29 185 6137\n\n⏱ Отвечаем в течение 2 часов.\nДо связи! 👋'}
+  ],
+  stack:[
+    {f:'user',t:'⚙️ Технологии'},
+    {f:'bot',t:'🔧 Наш стек:\n\nФронтенд: React, Next.js, Vue\nБэкенд: Node.js, Python, Go\nБД: PostgreSQL, Redis, MongoDB\nБоты: python-telegram-bot, Telegraf\nAI: GPT-4, Claude, LangChain\nДеплой: Docker, VPS, Vercel\n\n⚡ Подбираем технологии под задачу'}
+  ],
+  timeline:[
+    {f:'user',t:'🗓 Сроки'},
+    {f:'bot',t:'📅 Типичные сроки:\n\n⚡ Лендинг — 5–10 дней\n🤖 Простой бот — 3–7 дней\n🏢 Корпоративный сайт — 3–5 нед.\n🚀 Telegram Mini App — 4–8 нед.\n🔥 Высоконагруженная система — от 8 нед.\n\nСроки зависят от объёма. Обсудим?'}
+  ]
+};
+
+const freeReplies=[
+  {keys:['привет','hello','hi','хай','прив'],r:{f:'bot',t:'Привет! 😊 Рад видеть вас. Выберите тему из меню или задайте вопрос — постараюсь помочь!'}},
+  {keys:['сайт','website','лендинг','landing'],r:{f:'bot',t:'🌐 Разрабатываем сайты любой сложности — от лендингов до высоконагруженных платформ.\n\nНажмите «🚀 Услуги» для деталей или сразу оставьте заявку!'}},
+  {keys:['бот','bot','telegram','тг','tg'],r:{f:'bot',t:'🤖 Создаём умных Telegram-ботов: с AI, CRM-интеграцией, платёжными системами и аналитикой.\n\nПосмотрите «⚙️ Технологии» — расскажу, на чём делаем!'}},
+  {keys:['цена','стоимость','сколько','price','cost','бюджет'],r:{f:'bot',t:'💰 Нажмите «💰 Цены» — там все тарифы.\n\nИли сразу скажите, что нужно сделать — посчитаю примерную стоимость!'}},
+  {keys:['срок','когда','быстро','deadline','время'],r:{f:'bot',t:'⏱ Сроки зависят от задачи. Нажмите «🗓 Сроки» — там разбивка по типам проектов.\n\nГорящий дедлайн? Напишите нам напрямую — обсудим!'}},
+  {keys:['спасибо','thanks','пасиб','👍'],r:{f:'bot',t:'😊 Пожалуйста! Буду рад помочь ещё.\n\nЕсли готовы обсудить проект — нажмите «📞 Связаться» 🚀'}},
+  {keys:['ai','ии','гпт','gpt','claude','нейросеть','нейро'],r:{f:'bot',t:'🧠 Да, интегрируем AI в боты!\n\nРаботаем с GPT-4, Claude, собственными моделями. Умные диалоги, классификация, суммаризация, генерация контента.\n\nПосмотрите «⚙️ Технологии»!'}}
+];
+
+const msgWrap=document.getElementById('tg-messages');
+let botBusy=false;
+
+function getTime(){const d=new Date();return`${d.getHours()}:${String(d.getMinutes()).padStart(2,'0')}`}
+
+function addMsg(f,t,skipAnim){
+  const el=document.createElement('div');
+  el.className=`tg-msg ${f}`;
+  if(f==='user')el.style.animation='none';
+  const textEl=document.createElement('div');
+  textEl.innerHTML=t.replace(/\n/g,'<br>');
+  el.appendChild(textEl);
+  const meta=document.createElement('div');
+  meta.className='tg-msg-meta';
+  meta.innerHTML=`<span class="tg-msg-time">${getTime()}</span>${f==='user'?'<span class="tg-msg-check">✓✓</span>':''}`;
+  el.appendChild(meta);
+  msgWrap.appendChild(el);
+  msgWrap.scrollTop=msgWrap.scrollHeight;
+}
+
+function showTyping(){
+  if(document.getElementById('typi'))return;
+  const el=document.createElement('div');el.className='tg-typing';el.id='typi';
+  el.setAttribute('aria-label','Бот печатает');
+  el.innerHTML='<div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>';
+  msgWrap.appendChild(el);msgWrap.scrollTop=msgWrap.scrollHeight;
+  const st=document.getElementById('tg-status-text');
+  if(st){st.textContent='✏️ печатает...';st.style.color='#8BA7C7';}
+}
+function hideTyping(){
+  const el=document.getElementById('typi');if(el)el.remove();
+  const st=document.getElementById('tg-status-text');
+  if(st){st.textContent='● онлайн';st.style.color='';}
+}
+
+function botReply(k){
+  if(botBusy)return;botBusy=true;
+  const msgs=botReplies[k];if(!msgs)return;
+  addMsg(msgs[0].f,msgs[0].t);
+  const delay=600+t(msgs[1].t)*18;
+  setTimeout(()=>{
+    showTyping();
+    setTimeout(()=>{hideTyping();addMsg(msgs[1].f,msgs[1].t);botBusy=false;},delay+Math.random()*400);
+  },200);
+}
+
+function t(s){return Math.min(s.length,120)}
+
+function sendUserMsg(){
+  if(botBusy)return;
+  const inp=document.getElementById('tg-user-input');
+  const text=inp.value.trim();
+  if(!text)return;
+  addMsg('user',text);
+  inp.value='';
+  botBusy=true;
+
+  const lower=text.toLowerCase();
+  let matched=null;
+  for(const fr of freeReplies){
+    if(fr.keys.some(k=>lower.includes(k))){matched=fr.r;break;}
+  }
+  if(!matched){
+    matched={f:'bot',t:'🤔 Не совсем понял вопрос. Попробуйте выбрать тему из меню ниже или напишите нам напрямую:\n\n✈️ @V_uzername — ответим быстро!'};
+  }
+
+  setTimeout(()=>{
+    showTyping();
+    setTimeout(()=>{hideTyping();addMsg(matched.f,matched.t);botBusy=false;},900+Math.random()*500);
+  },300);
+}
+
+function resetBot(){
+  msgWrap.innerHTML='<div class="tg-date-sep">сегодня</div>';
+  botBusy=false;
+  hideTyping();
+  setTimeout(()=>{
+    showTyping();
+    setTimeout(()=>{
+      hideTyping();
+      botReplies.init.forEach(m=>addMsg(m.f,m.t));
+    },800);
+  },200);
+}
+
+document.getElementById('tg-user-input').addEventListener('keydown',function(e){
+  if(e.key==='Enter')sendUserMsg();
+});
+
+botReplies.init.forEach(m=>addMsg(m.f,m.t,true));
+
+/* ── FORM ── */
+let currentStep=1,selectedType='',selectedBudget='';
+function updateProgress(s){
+  for(let i=1;i<=4;i++){
+    const d=document.getElementById('pd-'+i),l=document.getElementById('pl-'+i);
+    if(i<s){d.className='progress-dot done';d.textContent='✓'}
+    else if(i===s){d.className='progress-dot active';d.textContent=i}
+    else{d.className='progress-dot';d.textContent=i}
+    if(l)l.className=i<s?'progress-line active':'progress-line';
+  }
+  document.getElementById('form-progress').setAttribute('aria-valuenow',s);
+}
+function showStep(s){
+  document.querySelectorAll('.form-step').forEach(x=>x.classList.remove('active'));
+  const el=document.getElementById('step-'+s);if(el)el.classList.add('active');
+  updateProgress(s);
+}
+function validatePhone(p){return/^\+375\s?\(?\d{2}\)?\s?\d{3}[-\s]?\d{2}[-\s]?\d{2}$/.test(p.trim())}
+function nextStep(s){
+  if(s===1){
+    const n=document.getElementById('f-name').value.trim(),p=document.getElementById('f-phone').value.trim();
+    let ok=true;
+    const ni=document.getElementById('f-name'),pi=document.getElementById('f-phone');
+    const en=document.getElementById('err-name'),ep=document.getElementById('err-phone');
+    if(n.length<2){ni.classList.add('error');en.classList.add('show');ok=false}else{ni.classList.remove('error');ni.classList.add('valid');en.classList.remove('show')}
+    if(!validatePhone(p)){pi.classList.add('error');ep.classList.add('show');ok=false}else{pi.classList.remove('error');pi.classList.add('valid');ep.classList.remove('show')}
+    if(!ok)return;
+  }
+  if(s===2){
+    const tg=document.getElementById('f-tg').value.trim();
+    const ti=document.getElementById('f-tg'),et=document.getElementById('err-tg');
+    if(tg&&!tg.startsWith('@')){ti.classList.add('error');et.classList.add('show');return}
+    ti.classList.remove('error');et.classList.remove('show');
+  }
+  if(s===3){if(!selectedType){document.getElementById('err-type').classList.add('show');return}document.getElementById('err-type').classList.remove('show')}
+  showStep(++currentStep);
+}
+function prevStep(s){showStep(--currentStep)}
+function selectType(btn,t){document.querySelectorAll('.project-type').forEach(b=>b.classList.remove('selected'));btn.classList.add('selected');selectedType=t;document.getElementById('err-type').classList.remove('show')}
+function selectBudget(btn,b){document.querySelectorAll('.budget-option').forEach(x=>x.classList.remove('selected'));btn.classList.add('selected');selectedBudget=b;document.getElementById('err-budget').classList.remove('show')}
+function submitForm() {
+  if (!selectedBudget) {
+    document.getElementById('err-budget').classList.add('show');
+    return;
+  }
+  const formData = {
+    name: document.getElementById('f-name').value,
+    phone: document.getElementById('f-phone').value,
+    telegram: document.getElementById('f-tg').value,
+    projectType: selectedType,
+    budget: selectedBudget
+  };
+  const SCRIPT_URL = window.__APP_CONFIG__?.SCRIPT_URL;
+  if (!SCRIPT_URL) { console.error('SCRIPT_URL не задан в config.js'); return; }
+  const fb = document.getElementById('form-body'), fp = document.getElementById('form-progress');
+  fb.style.cssText = 'transition:opacity .4s,transform .4s;opacity:0;transform:scale(.95)';
+  fp.style.cssText = 'transition:opacity .4s;opacity:0';
+  setTimeout(() => {
+    fb.style.display = 'none';
+    fp.style.display = 'none';
+    document.getElementById('form-success').style.display = 'block';
+  }, 400);
+  fetch(SCRIPT_URL, {
+    method: 'POST',
+    mode: 'no-cors',
+    cache: 'no-cache',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(formData)
+  }).catch(err => console.error('Ошибка отправки:', err));
+}
+
+function openForm(tier){
+  document.getElementById('contact').scrollIntoView({behavior:'smooth'});
+  setTimeout(()=>{
+    const btns=document.querySelectorAll('.budget-option');
+    const map={'Базовый':0,'Бизнес':1,'Премиум':2};
+    if(map[tier]!==undefined)selectBudget(btns[map[tier]],tier);
+  },800);
+}
+document.getElementById('f-phone').addEventListener('input',function(){
+  let v=this.value.replace(/\D/g,'');
+  if(v.startsWith('80'))v='375'+v.slice(2);
+  else if(!v.startsWith('375'))v='375'+v;
+  v=v.slice(0,12);
+  let f='+375';
+  if(v.length>3)f+=' ('+v.slice(3,5);
+  if(v.length>=5)f+=') '+v.slice(5,8);
+  if(v.length>=8)f+='-'+v.slice(8,10);
+  if(v.length>=10)f+='-'+v.slice(10,12);
+  this.value=f;
+});
+document.getElementById('year').textContent=new Date().getFullYear();
+/* ── PHONE MOTION ── */
+const phone = document.querySelector('.phone-frame');
+const screen = document.querySelector('.phone-screen');
+
+let currentX = 2;
+let currentY = -8;
+let targetX = 2;
+let targetY = -8;
+
+function animatePhone() {
+  currentX += (targetX - currentX) * 0.12;
+  currentY += (targetY - currentY) * 0.12;
+
+  phone.style.transform = `
+    rotateX(${currentX}deg)
+    rotateY(${currentY}deg)
+  `;
+
+  screen.style.transform = `
+    translateX(${currentY * 0.4}px)
+    translateY(${currentX * 0.4}px)
+  `;
+
+  requestAnimationFrame(animatePhone);
+}
+
+function handleOrientation(e) {
+  if (!e.beta || !e.gamma) return;
+
+  targetX = Math.max(-18, Math.min(18, e.beta * 0.18));
+  targetY = Math.max(-18, Math.min(18, e.gamma * 0.35));
+}
+
+function enableMotion() {
+  window.addEventListener('deviceorientation', handleOrientation);
+}
+
+if (
+  typeof DeviceOrientationEvent !== 'undefined' &&
+  typeof DeviceOrientationEvent.requestPermission === 'function'
+) {
+  document.body.addEventListener('click', async () => {
+    try {
+      const permission = await DeviceOrientationEvent.requestPermission();
+      if (permission === 'granted') enableMotion();
+    } catch (err) {
+      console.log('Motion denied');
+    }
+  }, { once: true });
+} else {
+  enableMotion();
+}
+
+/* fallback для ПК через мышку */
+document.addEventListener('mousemove', (e) => {
+  if ('ontouchstart' in window) return;
+
+  const x = (e.clientY / window.innerHeight - 0.5) * 20;
+  const y = (e.clientX / window.innerWidth - 0.5) * 20;
+
+  targetX = -x;
+  targetY = y;
+});
+
+animatePhone();
+</script>
+</body>
+</html>
